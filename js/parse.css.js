@@ -17,7 +17,9 @@ function cssWalker(styleTag, predicate) {
 }
 
 function retrieveCss(styleTag) {
-  const selectors = [];
+  const selectors = {
+    map: {}
+  };
   cssWalker(styleTag, (rule, media) => {
     const selector = {
       media: media,
@@ -29,7 +31,7 @@ function retrieveCss(styleTag) {
       if (cssBlackListProps.has(name)) return;
       selector.props[name] = rule.style[name];
     });
-    selectors.push(selector);
+    selectors.map[`${selector.media}/${selector.selectorText}`] = selector;
   });
   return selectors;
 }

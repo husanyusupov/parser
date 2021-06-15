@@ -1,15 +1,20 @@
 import {generateId} from "./utils.js";
 
 function attr(tag, name, value) {
+  let match;
+
   if (name === 'class') {
     tag.className = value;
-  }
-  const match = name.match(/mosaic-fn-(each|use|include)/);
-  if (match) {
+  } else if ((match = name.match(/mosaic-fn-(each|use|include|if)/))) {
     if (!tag.fn) {
       tag.fn = {};
     }
     tag.fn[match[1]] = value;
+  } else {
+    if (!tag.attrs) {
+      tag.attrs = {};
+    }
+    tag.attrs[name] = value;
   }
 }
 
@@ -18,13 +23,9 @@ function retrieveTree(element) {
     root: '',
     map: {}
   };
-  const map = {};
 
   function bypass(element, parent = '') {
     const id = generateId();
-    if (element.id) {
-      map[element.id] = id;
-    }
     const tag = {
       id: id,
       parent: parent,
@@ -49,7 +50,7 @@ function retrieveTree(element) {
 
   tree.root = bypass(element);
 
-  return { tree, map };
+  return tree;
 }
 
 export default function parseHtml(text) {
