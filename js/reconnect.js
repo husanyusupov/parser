@@ -1,3 +1,5 @@
+import { propReg, uniqueRegEnd } from "./config.js";
+
 function change(obj, prop, keys) {
     const value = obj[prop];
     if (value) {
@@ -9,7 +11,7 @@ function change(obj, prop, keys) {
         } else {
             first = value;
         }
-        const key = keys.find(key => key.replace(/-[0-9a-z]{5}$/, '') === first);
+        const key = keys.find(key => key.replace(propReg, '') === first);
         if (key) {
             obj[prop] = key + rest;
         } else {
@@ -25,7 +27,7 @@ export default function reconnect(dataCollection, tree) {
         const each = tag?.fn?.each;
 
         if (use) {
-            const key = Object.keys(scope).find(key => key.replace(/--u-[0-9a-z]{9}$/, '') === use);
+            const key = Object.keys(scope).find(key => key.replace(uniqueRegEnd, '') === use);
             if (key) {
                 scope = scope[key].json;
                 tag.fn.use = key;
@@ -35,7 +37,7 @@ export default function reconnect(dataCollection, tree) {
         }
 
         if (each) {
-            const key = Object.keys(scope).find(key => key.replace(/-[0-9a-z]{5}$/, '') === each);
+            const key = Object.keys(scope).find(key => key.replace(propReg, '') === each);
             if (key) {
                 scope = scope[key].value;
                 tag.fn.each = key;

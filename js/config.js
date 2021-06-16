@@ -24,3 +24,7 @@ export const uniqueReg = new RegExp(uniqueRegStr);
 export const uniqueRegAll = new RegExp(uniqueRegStr, 'g');
 export const uniqueRegStart = new RegExp('^' + uniqueRegStr);
 export const uniqueRegEnd = new RegExp(uniqueRegStr + '$');
+export const propLength = 5;
+export const propDivider = '_';
+export const propRegStr = `${propDivider}[0-9a-z]{${propLength}}$`;
+export const propReg = new RegExp(propRegStr);

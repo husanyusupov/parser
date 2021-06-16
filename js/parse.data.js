@@ -1,3 +1,4 @@
+import { propDivider, propLength, uniquePrefix } from "./config.js";
 import {generateId} from "./utils.js";
 
 function dataWalker(item, callback, flat = true) {
@@ -63,12 +64,12 @@ function regenerate(parsed) {
     map: {}
   };
   Object.keys(parsed).forEach((key) => {
-    const alias = key + '--u-' + generateId();
+    const alias = key + uniquePrefix + generateId();
     const value = parsed[key];
 
     dataWalker(value, (levels, json, data) => {
       const keys = Object.keys(json);
-      const renamed = keys.map(key => key + '-' + generateId(5));
+      const renamed = keys.map(key => key + propDivider + generateId(propLength));
 
       changeKeys(json, keys, renamed);
 
