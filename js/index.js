@@ -24,11 +24,11 @@ dataText.value = localStorage.getItem(dataText.id);
 
 function generate() {
 
-  const data = parseData(dataText.value);
+  const { data, map } = parseData(dataText.value);
   const html = parseHtml(htmlText.value);
   const css = parseCss(cssText.value);
 
-  reconnect(data, html);
+  reconnect(data, html, map);
 
   const layout = {
     tree: html, 
@@ -37,8 +37,6 @@ function generate() {
   };
 
   resultText.value = JSON.stringify(layout);
-
-  console.log(layout);
 }
 
 function save(e) {

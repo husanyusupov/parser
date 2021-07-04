@@ -1,4 +1,4 @@
-import { propReg, uniqueRegEnd } from "./config.js";
+import { propDivider, propReg, uniqueRegEnd } from "./config.js";
 
 function change(obj, prop, keys) {
     const value = obj[prop];
@@ -11,7 +11,7 @@ function change(obj, prop, keys) {
         } else {
             first = value;
         }
-        const key = keys.find(key => key.replace(propReg, '') === first);
+        const key = keys.find(key => key.split(propDivider)[0] === first);
         if (key) {
             obj[prop] = key + rest;
         } else {
@@ -20,17 +20,17 @@ function change(obj, prop, keys) {
     }
 }
 
-export default function reconnect(dataCollection, tree) {
+export default function reconnect(dataCollection, tree, map) {
     function bypass(id, scope) {
         const tag = tree.map[id];
         const use = tag?.fn?.use;
         const each = tag?.fn?.each;
 
         if (use) {
-            const key = Object.keys(scope).find(key => key.replace(uniqueRegEnd, '') === use);
-            if (key) {
-                scope = scope[key].json;
-                tag.fn.use = key;
+            if (use in map) {
+                const newUse = map[use];
+                scope = scope[newUse].json;
+                tag.fn.use = newUse;
             } else {
                 throw Error(`Key not found for fn.use: ${use}`);
             }

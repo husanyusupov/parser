@@ -1,30 +1,27 @@
 * {
     box-sizing: border-box;
 }
-.wrapper {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: min-content minmax(400px, auto);
+
+fieldset {
+    display: inline-block;
 }
+fieldset label { margin-right: 1em;}
+input:checked + span { color: #1c75ff}
+
+td {
+    vertical-align: top;
+}
+
+.inputs-table {
+    width: 100%;
+    table-layout: fixed;
+}
+
 textarea {
-    max-width: 100%;
-    resize: vertical;
-}
-.result {
     width: 100%;
-    min-height: 600px;
     resize: vertical;
 }
+
 .generate {
-    width: 100%;
-    height: 60px;
-    margin: 20px 0;
-}
-.footer {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-.preview {
-    width: 100%;
-    height: 300px;
+    height: 50px;
 }

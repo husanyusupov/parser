@@ -17,6 +17,7 @@ export const cssReplaceProps = new Map([
 ]);
 export const idLength = 9;
 export const uniquePrefix = '--u-';
+export const aliasDivider = '_';
 export const idRegStr = `[0-9a-z]{${idLength}}`;
 export const idReg = new RegExp(idRegStr);
 export const uniqueRegStr = `${uniquePrefix}(${idRegStr})`;
@@ -28,3 +29,4 @@ export const propLength = 5;
 export const propDivider = '_';
 export const propRegStr = `${propDivider}[0-9a-z]{${propLength}}$`;
 export const propReg = new RegExp(propRegStr);
+export const objLength = 5;
