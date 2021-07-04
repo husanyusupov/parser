@@ -14,6 +14,8 @@ form.addEventListener('focusout', save);
 form.elements.html.value = localStorage.getItem('html');
 form.elements.css.value = localStorage.getItem('css');
 form.elements.data.value = localStorage.getItem('data');
+form.elements.name.value = localStorage.getItem('name');
+form.elements.type.value = localStorage.getItem('type');
 
 function generate(e) {
   e.preventDefault();
@@ -48,9 +50,12 @@ function generate(e) {
 
 function save(e) {
   const target = e.target;
+  const tagName = target.tagName.toLowerCase();
+  const isTextarea = tagName === 'textarea';
+  const isInput = tagName === 'input';
 
-  if (target.tagName.toLowerCase() === 'textarea') {
+  if (isTextarea || isInput) {
     const value = target.value;
-    localStorage.setItem(target.id, value);
+    localStorage.setItem(target.name, value);
   }
 }

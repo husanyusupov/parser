@@ -38,9 +38,9 @@ function dataWalker(item, callback, flat = true) {
         } else {
           if (flat) {
             nextData = data.reduce(flatReducer(name), []);
-            nextDefs = data.reduce(flatReducer(name), []);
+            nextDefs = defs.reduce(flatReducer(name), []);
           } else {
-            nextData = defs.reduce(reducer(name), []);
+            nextData = data.reduce(reducer(name), []);
             nextDefs = defs.reduce(reducer(name), []);
           }
         }
