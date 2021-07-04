@@ -2,31 +2,26 @@ import parseCss from "./parse.css.js";
 import parseData from "./parse.data.js";
 import parseHtml from "./parse.html.js";
 import reconnect from "./reconnect.js";
+import { generateId } from "./utils.js";
 
 const preview = document.getElementById('preview');
-const genBtn = document.getElementById('generate');
+const form = document.getElementById('form');
 const resultText = document.getElementById('result');
 
-const htmlText = document.getElementById('html');
-const cssText = document.getElementById('css');
-const dataText = document.getElementById('data');
+form.addEventListener('submit', generate);
+form.addEventListener('focusout', save);
 
-const previewDoc = preview.contentDocument;
+form.elements.html.value = localStorage.getItem('html');
+form.elements.css.value = localStorage.getItem('css');
+form.elements.data.value = localStorage.getItem('data');
 
-genBtn.addEventListener('click', generate);
-htmlText.addEventListener('blur', save);
-cssText.addEventListener('blur', save);
-dataText.addEventListener('blur', save);
+function generate(e) {
+  e.preventDefault();
 
-htmlText.value = localStorage.getItem(htmlText.id);
-cssText.value = localStorage.getItem(cssText.id);
-dataText.value = localStorage.getItem(dataText.id);
-
-function generate() {
-
-  const { data, map } = parseData(dataText.value);
-  const html = parseHtml(htmlText.value);
-  const css = parseCss(cssText.value);
+  const { data, map } = parseData(form.elements.data.value);
+  const html = parseHtml(form.elements.html.value);
+  const css = parseCss(form.elements.css.value);
+  const type = form.elements.type.value;
 
   reconnect(data, html, map);
 
@@ -35,12 +30,27 @@ function generate() {
     selectorCollection: css, 
     dataCollection: data
   };
+  
+  const result = {};
 
-  resultText.value = JSON.stringify(layout);
+  switch (type) {
+    case 'widget':
+    case 'design':
+    case 'symbol':
+    case 'library':
+      result.layout = layout;
+      result.name = form.elements.name.value;
+      result.id = type + '_' + generateId();
+  }
+
+  resultText.value = JSON.stringify(result);
 }
 
 function save(e) {
   const target = e.target;
-  const value = target.value;
-  localStorage.setItem(target.id, value);
+
+  if (target.tagName.toLowerCase() === 'textarea') {
+    const value = target.value;
+    localStorage.setItem(target.id, value);
+  }
 }
