@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>users</title>
+</head>
+
+<body>
+    <div class="users" mosaic-fn-use="alias">
+        <h1 class="users__title">title</h1>
+        <ol class="users__list">
+            <li class="user" mosaic-fn-each="users">
+                <h4 class="user__name">name</h4>
+                <img class="user__picture" src="avatar.src" width="avatar.width" height="avatar.height">
+                <p class="user__age">age</p>
+                <ul class="user__phones">
+                    <li class="phone" mosaic-fn-each="phones">
+                        <span class="phone__type">type</span>
+                        <span class="phone__number">value</span>
+                    </li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+    <style>
+        .users__list {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .user {
+            background-color: #e8f5e9;
+            padding: 20px;
+            margin: 20px;
+            width: 150px;
+        }
+
+        .user__name {
+            background-color: var(--color, steelblue);
+        }
+
+        .user__picture {
+            filter: grayscale(1);
+        }
+
+        .user__phones {
+            padding-left: 15px;
+        }
+    </style>
+    <script>
+        let data = {
+            "alias": {
+                "data": {
+                    "title": "Foo bar!",
+                    "users": [{
+                        "name": "John Doe",
+                        "age": 29,
+                        "avatar": { "src": "/images/male4.jpg", "width": "150", "height": "150", "type": "png" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 67 695 87 54"
+                        }, { "type": "home", "value": "73 544 32 32" }]
+                    }, {
+                        "name": "Marry McAdams",
+                        "age": 7,
+                        "avatar": { "src": "/images/female5.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "John Doe",
+                        "age": 29,
+                        "avatar": { "src": "/images/male8.jpg", "width": "150", "height": "150", "type": "png" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 67 695 87 54"
+                        }, { "type": "home", "value": "73 544 32 32" }]
+                    }, {
+                        "name": "Marry McAdams",
+                        "age": 20,
+                        "avatar": { "src": "/images/female16.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Marry McAdams",
+                        "age": 37,
+                        "avatar": { "src": "/images/female19.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Marry McAdams",
+                        "age": 21,
+                        "avatar": { "src": "/images/female15.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "John Doe",
+                        "age": 29,
+                        "avatar": { "src": "/images/male11.jpg", "width": "150", "height": "150", "type": "png" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 67 695 87 54"
+                        }, { "type": "home", "value": "73 544 32 32" }]
+                    }, {
+                        "name": "Marry McAdams",
+                        "age": 17,
+                        "avatar": { "src": "/images/female11.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Ervin Howell",
+                        "age": 22,
+                        "avatar": { "src": "/images/female7.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Jeff Bezos",
+                        "age": 63,
+                        "avatar": { "src": "/images/male12.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Rex Trail",
+                        "age": 20,
+                        "avatar": { "src": "/images/male16.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Clementine Bach",
+                        "age": 18,
+                        "avatar": { "src": "/images/female6.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Clementine Bach",
+                        "age": 18,
+                        "avatar": { "src": "/images/male15.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Rex Trail",
+                        "age": 20,
+                        "avatar": { "src": "/images/male5.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Clementine Bach",
+                        "age": 18,
+                        "avatar": { "src": "/images/female3.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Clementine Bach",
+                        "age": 18,
+                        "avatar": { "src": "/images/female4.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Rex Trail",
+                        "age": 20,
+                        "avatar": { "src": "/images/male6.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Clementine Bach",
+                        "age": 18,
+                        "avatar": { "src": "/images/female12.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Rex Trail",
+                        "age": 20,
+                        "avatar": { "src": "/images/male7.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Clementine Bach",
+                        "age": 18,
+                        "avatar": { "src": "/images/female13.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Rex Trail",
+                        "age": 20,
+                        "avatar": { "src": "/images/male3.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Clementine Bach",
+                        "age": 18,
+                        "avatar": { "src": "/images/female14.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Rex Trail",
+                        "age": 20,
+                        "avatar": { "src": "/images/male9.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Clementine Bach",
+                        "age": 18,
+                        "avatar": { "src": "/images/female2.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Rex Trail",
+                        "age": 20,
+                        "avatar": { "src": "/images/male10.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Clementine Bach",
+                        "age": 18,
+                        "avatar": { "src": "/images/female23.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Clementine Bach",
+                        "age": 18,
+                        "avatar": { "src": "/images/female21.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }, {
+                        "name": "Rex Trail",
+                        "age": 20,
+                        "avatar": { "src": "/images/male2.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }]
+                },
+                "defs": {
+                    "title": "Foo bar!",
+                    "users": [{
+                        "name": "John Doe",
+                        "age": 29,
+                        "avatar": { "src": "/images/male4.jpg", "width": "150", "height": "150", "type": "png" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 67 695 87 54"
+                        }, { "type": "home", "value": "73 544 32 32" }]
+                    }, {
+                        "name": "Marry McAdams",
+                        "age": 7,
+                        "avatar": { "src": "/images/female5.jpg", "width": "150", "height": "150", "type": "jpg" },
+                        "phones": [{
+                            "type": "mobile",
+                            "value": "+998 99 777 22 00"
+                        }, { "type": "home", "value": "73 666 44 00" }]
+                    }]
+                },
+                "json": {
+                    "title": { "type": "text", "maxLength": 50 },
+                    "users": {
+                        "type": "meta",
+                        "single": false,
+                        "value": {
+                            "name": { "type": "text", "maxLength": 50 },
+                            "age": { "type": "number", "min": 0, "max": 199 },
+                            "avatar": {
+                                "type": "meta",
+                                "single": true,
+                                "value": {
+                                    "src": { "type": "text" },
+                                    "width": { "type": "text" },
+                                    "height": { "type": "text" },
+                                    "type": { "type": "text" }
+                                }
+                            },
+                            "phones": {
+                                "type": "meta",
+                                "value": {
+                                    "type": { "type": "text", "maxLength": 50 },
+                                    "value": { "type": "text", "maxLength": 50 }
+                                }
+                            }
+                        }
+                    }
+                },
+                "id": "alias"
+            }
+        }
+    </script>
+</body>
+
+</html>

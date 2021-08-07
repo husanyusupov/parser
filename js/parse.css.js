@@ -24,12 +24,14 @@ function retrieveCss(styleTag) {
     const selector = {
       media: media,
       selectorText: rule.selectorText.trim(),
-      props: {}
+      style: {
+        map: {}
+      }
     };
     Array.from(rule.style).forEach((name) => {
       if (cssReplaceProps.has(name)) name = cssReplaceProps.get(name);
       if (cssBlackListProps.has(name)) return;
-      selector.props[name] = rule.style[name];
+      selector.style.map[name] = rule.style[name];
     });
     selectors.map[`${selector.media}/${selector.selectorText}`] = selector;
   });

@@ -33,6 +33,10 @@ function retrieveTree(element) {
     };
     let textContent;
 
+    if (element.classList.length === 0) {
+      throw Error('Необходимо задать класс элементу: ' + element.tagName);
+    }
+
     if (element.hasAttributes()) {
       [...element.attributes].forEach(({name, value}) => attr(tag, name, value));
     }
