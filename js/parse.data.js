@@ -94,30 +94,32 @@ function regenerate(parsed) {
     const value = parsed[alias];
     value.id = map[alias] = newAlias;
 
-    dataWalker(value, (levels, json, data, defs) => {
-      const names = Object.keys(json);
-      const renames = names.map(createPropId);
+    if (!value.module) {
+      dataWalker(value, (levels, json, data, defs) => {
+        const names = Object.keys(json);
+        const renames = names.map(createPropId);
 
-      names.forEach((name, index) => {
-        map[name] = renames[index];
+        names.forEach((name, index) => {
+          map[name] = renames[index];
+        });
+
+        changeKeys(json, names, renames);
+
+        if (levels.length === 0) {
+          changeKeys(data, names, renames);
+          changeKeys(defs, names, renames);
+        } else {
+          data.forEach(d => {
+            changeKeys(d, names, renames);
+            d.id = createObjId();
+          });
+          defs.forEach(d => {
+            changeKeys(d, names, renames);
+            d.id = createObjId();
+          });
+        }
       });
-
-      changeKeys(json, names, renames);
-
-      if (levels.length === 0) {
-        changeKeys(data, names, renames);
-        changeKeys(defs, names, renames);
-      } else {
-        data.forEach(d => {
-          changeKeys(d, names, renames);
-          d.id = createObjId();
-        });
-        defs.forEach(d => {
-          changeKeys(d, names, renames);
-          d.id = createObjId();
-        });
-      }
-    });
+    }
 
     data.map[newAlias] = value;
   });

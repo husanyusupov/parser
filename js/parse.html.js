@@ -5,7 +5,7 @@ function attr(tag, name, value) {
 
   if (name === 'class') {
     tag.className = value;
-  } else if ((match = name.match(/mosaic-fn-(each|use|include|if)/))) {
+  } else if ((match = name.match(/mosaic-fn-(each|use|include|if|goto|label)/))) {
     if (!tag.fn) {
       tag.fn = {};
     }
@@ -33,7 +33,7 @@ function retrieveTree(element) {
     };
     let textContent;
 
-    if (element.classList.length === 0) {
+    if (element.classList.length === 0 && !element.hasAttribute('mosaic-fn-goto')) {
       throw Error('Необходимо задать класс элементу: ' + element.tagName);
     }
 

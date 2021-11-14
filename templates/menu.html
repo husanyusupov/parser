@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>menu</title>
+  </head>
+
+  <body>
+    <nav class="menu" mosaic-fn-use="alias">
+      <ul class="menu__list">
+        <li class="menu__item" mosaic-fn-each="menu">
+          <a class="menu__link" href="url">name</a>
+          <ul class="submenu__list" mosaic-fn-label="sub" mosaic-fn-if="sub">
+            <li class="submenu__item" mosaic-fn-each="sub">
+              <a class="submenu__link" href="url">name</a>
+              <ul mosaic-fn-goto="sub"></ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <style>
+      .menu {
+        border: 1px solid gray;
+      }
+      .menu__list {
+        border: 1px solid blue;
+      }
+      .submenu__list {
+        border: 1px solid tomato;
+      }
+    </style>
+    <script>
+      let json = {
+        "alias": {
+          "data": {
+            "menu": [
+              {
+                "url": "/",
+                "name": "О Компании",
+                "sub": [
+                  {
+                    "url": "#",
+                    "name": "Подраздел левого меню",
+                    "sub": [
+                      {
+                        "url": "#",
+                        "name": "Третий уровень",
+                        "sub": [
+                          {
+                            "url": "#",
+                            "name": "Четвертый уровень 1"
+                          },
+                          {
+                            "url": "#",
+                            "name": "Четвертый уровень 2"
+                          }
+                        ]
+                      },
+                      {
+                        "url": "#",
+                        "name": "Третий уровень 2"
+                      }
+                    ]
+                  },
+                  {
+                    "url": "#",
+                    "name": "Подраздел левого меню 2"
+                  },
+                  {
+                    "url": "#",
+                    "name": "Подраздел левого меню 3"
+                  }
+                ]
+              },
+              {
+                "url": "#",
+                "name": "Услуги",
+                "sub": [
+                  {
+                    "url": "#",
+                    "name": "Подраздел левого меню 4",
+                    "sub": [
+                      {
+                        "url": "#",
+                        "name": "Третий уровень"
+                      },
+                      {
+                        "url": "#",
+                        "name": "Третий уровень 2"
+                      }
+                    ]
+                  },
+                  {
+                    "url": "#",
+                    "name": "Подраздел левого меню 5"
+                  },
+                  {
+                    "url": "#",
+                    "name": "Подраздел левого меню 6"
+                  }
+                ]
+              },
+              {
+                "url": "#",
+                "name": "Прайс-лист",
+                "sub": [
+                  {
+                    "url": "#",
+                    "name": "Подраздел левого меню 7",
+                    "sub": [
+                      {
+                        "url": "#",
+                        "name": "Третий уровень 3"
+                      },
+                      {
+                        "url": "#",
+                        "name": "Третий уровень 4"
+                      }
+                    ]
+                  },
+                  {
+                    "url": "#",
+                    "name": "Подраздел левого меню 8"
+                  },
+                  {
+                    "url": "#",
+                    "name": "Подраздел левого меню 9"
+                  }
+                ]
+              },
+              {
+                "url": "#",
+                "name": "Контакты"
+              },
+              {
+                "url": "#",
+                "name": "Отзывы о нас"
+              },
+              {
+                "url": "#",
+                "name": "Напишите нам"
+              }
+            ]
+          },
+          "defs": {
+            "menu": [
+              {
+                "url": "/",
+                "name": "О Компании",
+                "sub": [
+                  {
+                    "url": "#",
+                    "name": "Подраздел левого меню"
+                  },
+                  {
+                    "url": "#",
+                    "name": "Подраздел левого меню 2"
+                  },
+                  {
+                    "url": "#",
+                    "name": "Подраздел левого меню 3"
+                  }
+                ]
+              },
+              {
+                "url": "#",
+                "name": "Услуги"
+              }
+            ]
+          },
+          "json": {
+            "menu": {
+              "type": "meta"
+            }
+          },
+          "module": true
+        }
+      };
+    </script>
+  </body>
+</html>

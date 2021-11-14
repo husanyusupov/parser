@@ -29,8 +29,12 @@ export default function reconnect(dataCollection, tree, map) {
         if (use) {
             if (use in map) {
                 const newUse = map[use];
+                const isModule = scope[newUse].module;
                 scope = scope[newUse].json;
                 tag.fn.use = newUse;
+                if (isModule) {
+                    return;
+                }
             } else {
                 throw Error(`Key not found for fn.use: ${use}`);
             }

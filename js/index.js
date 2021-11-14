@@ -59,3 +59,5 @@ function save(e) {
     localStorage.setItem(target.name, value);
   }
 }
+
+console.log(import.meta);
