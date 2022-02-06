@@ -19,6 +19,7 @@
   "homepage": "https://github.com/husanyusupov/parser#readme",
   "dependencies": {
     "@xmldom/xmldom": "^0.7.3",
+    "fast-copy": "^2.1.1",
     "htmlparser2": "^7.1.1",
     "puppeteer": "^10.2.0"
   },

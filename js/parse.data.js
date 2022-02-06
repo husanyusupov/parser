@@ -1,5 +1,50 @@
-import { objLength, propDivider, propLength, aliasDivider } from "./config.js";
-import { generateId } from "./utils.js";
+import {objLength, aliasReg, aliasDivider} from "./config.js";
+import {generateId} from "./utils.js";
+
+function changeKeys(obj, keys, newKeys) {
+  for (let index = 0; index < keys.length; index++) {
+    const key = keys[index];
+    const newKey = newKeys[index];
+    if (key === newKey) {
+      throw Error(`Keys are equal: ${key} === ${newKey}`);
+    }
+    obj[newKey] = obj[key];
+    delete obj[key];
+  }
+}
+
+function createAliasId(alias) {
+  const match = alias.match(aliasReg);
+  if (match) {
+    return match[1] + generateId();
+  }
+  return alias + aliasDivider + generateId();
+}
+
+function createObjId() {
+  return 'obj_' + generateId();
+}
+
+function createPropId(name = 'prop') {
+  if (name.includes('_')) {
+    name = name.split('_')[0];
+  }
+  return name + '_' + generateId(objLength);
+}
+
+function reducer(name) {
+  return function (acc, list) {
+    Array.prototype.push.apply(acc, list.map((o) => o[name]));
+    return acc;
+  };
+}
+
+function flatReducer(name) {
+  return function (acc, o) {
+    Array.prototype.push.apply(acc, o[name]);
+    return acc;
+  };
+}
 
 function dataWalker(item, callback, flat = true) {
   const levels = [];
@@ -11,16 +56,8 @@ function dataWalker(item, callback, flat = true) {
     bypass(levels, body, data, defs);
   }
 
-  function reducer(name) {
-    return (acc, list) => acc.concat(list.map((o) => o[name]));
-  }
-
-  function flatReducer(name) {
-    return (acc, o) => acc.concat(o[name]);
-  }
-
   function bypass(levels, json, data, defs) {
-    Object.entries(json).forEach(([name, body]) => {
+    for (const [name, body] of Object.entries(json)) {
       if (body.type === 'meta' && !body.single) {
         let nextData;
         let nextDefs;
@@ -29,11 +66,11 @@ function dataWalker(item, callback, flat = true) {
 
         if (levels.length === 0) {
           if (flat) {
-            nextData = item.data[name];
-            nextDefs = item.defs[name];
+            nextData = data[name];
+            nextDefs = defs[name];
           } else {
-            nextData = [item.data[name]];
-            nextDefs = [item.defs[name]];
+            nextData = [data[name]];
+            nextDefs = [defs[name]];
           }
         } else {
           if (flat) {
@@ -49,45 +86,14 @@ function dataWalker(item, callback, flat = true) {
           bypass(nextLevels, nextJson, nextData, nextDefs);
         }
       }
-    });
-  }
-}
-
-function changeKeys(obj, keys, newKeys) {
-  for (let index = 0; index < keys.length; index++) {
-    const key = keys[index];
-    const newKey = newKeys[index];
-    if (key === newKey) {
-      throw Error(`Keys are equal: ${key} === ${newKey}`);
     }
-    obj[newKey] = obj[key];
-    delete obj[key];
   }
 }
 
-function createAliasId(alias = 'alias') {
-  if (alias.includes('_')) {
-    alias = alias.split('_')[0];
-  }
-  return alias + '_' + generateId();
-}
-
-function createObjId() {
-  return 'obj_' + generateId();
-}
-
-function createPropId(name = 'prop') {
-  if (name.includes('_')) {
-    name = name.split('_')[0];
-  }
-  return name + '_' + generateId(objLength);
-}
-
-function regenerate(parsed) {
+export function regenerate(parsed, map = {}) {
   const data = {
     map: {}
   };
-  const map = {};
   Object.keys(parsed).forEach((alias) => {
 
     const newAlias = createAliasId(alias);
@@ -123,10 +129,10 @@ function regenerate(parsed) {
 
     data.map[newAlias] = value;
   });
-  return { data, map };
+  return data;
 }
 
-export default function parseData(text) {
+export default function parseData(text, map) {
   const parsed = JSON.parse(text || '{}');
-  return regenerate(parsed);
+  return regenerate(parsed, map);
 }

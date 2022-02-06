@@ -2,26 +2,7 @@
     box-sizing: border-box;
 }
 
-fieldset {
-    display: inline-block;
-}
-fieldset label { margin-right: 1em;}
-input:checked + span { color: #1c75ff}
-
-td {
-    vertical-align: top;
-}
-
-.inputs-table {
-    width: 100%;
-    table-layout: fixed;
-}
-
 textarea {
     width: 100%;
     resize: vertical;
-}
-
-.generate {
-    height: 50px;
 }

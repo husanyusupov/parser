@@ -30,3 +30,4 @@ export const propDivider = '_';
 export const propRegStr = `${propDivider}[0-9a-z]{${propLength}}$`;
 export const propReg = new RegExp(propRegStr);
 export const objLength = 5;
+export const aliasReg = new RegExp(`(.+${aliasDivider})${idRegStr}$`);

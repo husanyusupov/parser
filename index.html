@@ -2,57 +2,78 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>parser</title>
-	<link rel="stylesheet" href="./css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>parser</title>
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
 
 <body>
-	<form id="form" enctype="multipart/form-data" method="post" name="fileinfo">
-		<table class="inputs-table">
-			<tr>
-				<td>
-					<h2>html</h2>
-					<textarea name="html" cols="30" rows="10"></textarea>
-				</td>
-				<td>
-					<h2>css</h2>
-					<textarea name="css" cols="30" rows="10"></textarea>
-				</td>
-				<td>
-					<h2>data</h2>
-					<textarea name="data" cols="30" rows="10"></textarea>
-				</td>
-			</tr>
-		</table>
-		<table>
-			<tr>
-				<td>
-					<label for="name">name</label> <br>
-					<input type="text" name="name">
-				</td>
-				<td>
-					<fieldset>
-						<legend>entity type</legend>
-						<label><input type="radio" name="type" value="widget"> <span>widget</span></label>
-						<label><input type="radio" name="type" value="design"> <span>design</span></label>
-						<label><input type="radio" name="type" value="symbol"> <span>symbol</span></label>
-						<label><input type="radio" name="type" value="library"> <span>library</span></label>
-					</fieldset>
-				</td>
-				<td><button class="generate" type="submit">generate</button></td>
-			</tr>
-		</table>
-	</form>
-
-
-	<h2>result</h2>
-	<div class="footer">
-		<textarea name="result" id="result" cols="30" rows="10" class="result" readonly></textarea>
-		<iframe class="preview" id="preview"></iframe>
-	</div>
-	<script src="./js/index.js" type="module"></script>
+<table width="100%">
+    <tr>
+        <td>
+            <form id="form" enctype="multipart/form-data" method="post" name="fileinfo">
+                <table width="100%">
+                    <tr>
+                        <td>
+                            <h2>html</h2>
+                            <textarea name="html" cols="30" rows="10"></textarea>
+                        </td>
+                        <td>
+                            <h2>css</h2>
+                            <textarea name="css" cols="30" rows="10"></textarea>
+                        </td>
+                        <td>
+                            <h2>data</h2>
+                            <textarea name="data" cols="30" rows="10"></textarea>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td>
+                            <label for="name">name</label> <br>
+                            <input type="text" name="name">
+                        </td>
+                        <td>
+                            <fieldset>
+                                <legend>entity type</legend>
+                                <label><input type="radio" name="type" value="widget"> <span>widget</span></label>
+                                <label><input type="radio" name="type" value="design"> <span>design</span></label>
+                                <label><input type="radio" name="type" value="symbol"> <span>symbol</span></label>
+                                <label><input type="radio" name="type" value="library"> <span>library</span></label>
+                            </fieldset>
+                        </td>
+                        <td>
+                            <button class="generate" type="submit">generate</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td width="100" align="center">или</td>
+        <td>
+            <form>
+                <table width="100%">
+                    <tr>
+                        <td align="center"></td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <input type="file" name="design" id="design" accept="text/plain">
+                            <p><small>исходник дизайна design.txt</small></p>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+    </tr>
+</table>
+<h2>result</h2>
+<div class="footer">
+    <textarea name="result" id="result" cols="30" rows="10" class="result" readonly></textarea>
+</div>
+<script src="./js/index.js" type="module"></script>
 </body>
 
 </html>
