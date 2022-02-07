@@ -5,9 +5,9 @@ export default function convertHTML (parsed, map) {
   };
 
   function getUpdatedPath(property) {
-    let match = property.match(/(.+)\..+/);
+    let match = property.match(/(.+?)(\..+)/);
     if (match) {
-      return map[match[1]];
+      return map[match[1]] + match[2];
     }
     return map[property];
   }
