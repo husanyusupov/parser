@@ -71,19 +71,70 @@ function onDesign(e) {
 
   reader.onloadend = function () {
     const parsed = JSON.parse(reader.result);
-    const map = {};
-    const result = {};
+    const allMap = {};
+    let symbols;
+
+    const allCss = parsed.tree.selectorCollection.map;
+    const allData = parsed.tree.dataCollection.map;
+
+    if (parsed.symbols?.length) {
+      symbols = parsed.symbols.map((parsedSymbol) => {
+        let css = parsedSymbol.tree?.selectorCollection?.map;
+        let data = parsedSymbol.tree?.dataCollection?.map;
+
+        // удаление селекторов символа из основного дерева
+        if (css) {
+          for (const key in css) {
+            if (css.hasOwnProperty(key) && allCss.hasOwnProperty(key)) {
+              delete allCss[key]
+            }
+          }
+        }
+
+        // удаление данных символа из основного дерева
+        if (data) {
+          for (const key in data) {
+            if (data.hasOwnProperty(key) && allData.hasOwnProperty(key)) {
+              delete allData[key]
+            }
+          }
+        }
+
+        // сборка данных для символа
+        const map = {};
+        const symbol = {};
+        const layout = {};
+        layout.dataCollection = convertData(parsedSymbol, map);
+        layout.tree = convertHTML(parsedSymbol, map);
+        layout.selectorCollection = convertCSS(parsedSymbol, map);
+
+        symbol.layout = layout;
+        symbol.name = parsedSymbol.name;
+        symbol.id = allMap[parsedSymbol.id] = 'symbol_' + generateId();
+
+        return symbol;
+      });
+    }
+
+    // создание данных дизайна
+    const design = {};
     const layout = {};
 
-    layout.dataCollection = convertData(parsed, map);
-    layout.tree = convertHTML(parsed, map);
-    layout.selectorCollection = convertCSS(parsed, map);
+    layout.dataCollection = convertData(parsed, allMap);
+    layout.tree = convertHTML(parsed, allMap);
+    layout.selectorCollection = convertCSS(parsed, allMap);
 
-    result.layout = layout;
-    result.name = parsed.name;
-    result.id = 'design_' + generateId();
+    design.layout = layout;
+    design.name = parsed.name;
+    design.id = 'design_' + generateId();
 
-    resultText.value = JSON.stringify(result);
+    resultText.value = JSON.stringify(design);
+
+    symbols.forEach((symbol) => {
+      const textarea = document.createElement('textarea');
+      textarea.value = JSON.stringify(symbol);
+      resultText.insertAdjacentElement('afterend', textarea);
+    });
   }
 
   reader.readAsText(file);

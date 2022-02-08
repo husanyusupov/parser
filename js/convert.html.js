@@ -48,7 +48,7 @@ export default function convertHTML (parsed, map) {
 
     if (originTag.className === 'include') {
       if (!tag.fn) tag.fn = {};
-      // tag.fn.include = tag.symbol;
+      tag.fn.include = getUpdatedPath(originTag.symbol);
     }
 
     if (originTag.data) {
