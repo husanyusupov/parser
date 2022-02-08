@@ -132,9 +132,22 @@ function onDesign(e) {
 
     symbols.forEach((symbol) => {
       const textarea = document.createElement('textarea');
+      textarea.readOnly = true;
       textarea.value = JSON.stringify(symbol);
       resultText.insertAdjacentElement('afterend', textarea);
     });
+
+    Object.keys(design.layout.tree.map).forEach((id) => {
+      const tag = design.layout.tree.map[id];
+      const include = tag.fn?.include;
+
+      if (include) {
+        const symbol = symbols.find((symbol) => {
+          return symbol.id === include;
+        });
+        console.log(include, symbol);
+      }
+    })
   }
 
   reader.readAsText(file);
