@@ -125,7 +125,7 @@ function onDesign(e) {
     const layout = {};
 
     layout.dataCollection = convertData(parsed, allMap);
-    console.log(allMap);
+
     layout.tree = convertHTML(parsed, allMap);
     layout.selectorCollection = convertCSS(parsed, allMap);
 

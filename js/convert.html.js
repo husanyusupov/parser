@@ -59,7 +59,6 @@ export default function convertHTML (parsed, map) {
         } else {
           value = getUpdatedPath(path + '/' + property);
         }
-        console.log(path + '/' + property, value);
         if (key === 'text') {
           tag.textContent = value;
         } else {
