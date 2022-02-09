@@ -66,6 +66,9 @@ function save(e) {
 }
 
 function onDesign(e) {
+  resultText.value = '';
+  while (resultText.nextElementSibling) resultText.nextElementSibling.remove();
+
   const reader = new FileReader();
   const file = e.target.files[0];
 
@@ -77,6 +80,7 @@ function onDesign(e) {
     const allCss = parsed.tree.selectorCollection.map;
     const allData = parsed.tree.dataCollection.map;
 
+    // обработка символов
     if (parsed.symbols?.length) {
       symbols = parsed.symbols.map((parsedSymbol) => {
         let css = parsedSymbol.tree?.selectorCollection?.map;
@@ -100,7 +104,7 @@ function onDesign(e) {
           }
         }
 
-        // сборка данных для символа
+        // создание объекта символа
         const map = {};
         const symbol = {};
         const layout = {};
@@ -121,12 +125,17 @@ function onDesign(e) {
     const layout = {};
 
     layout.dataCollection = convertData(parsed, allMap);
+    console.log(allMap);
     layout.tree = convertHTML(parsed, allMap);
     layout.selectorCollection = convertCSS(parsed, allMap);
 
     design.layout = layout;
     design.name = parsed.name;
     design.id = 'design_' + generateId();
+
+    if (symbols.length) {
+      design.layout.usedSymbols = symbols.map((symbol) => symbol.id);
+    }
 
     resultText.value = JSON.stringify(design);
 
@@ -145,7 +154,6 @@ function onDesign(e) {
         const symbol = symbols.find((symbol) => {
           return symbol.id === include;
         });
-        console.log(include, symbol);
       }
     })
   }

@@ -1,5 +1,5 @@
 import {objLength, aliasReg, aliasDivider} from "./config.js";
-import {generateId} from "./utils.js";
+import {generateId, objSet} from "./utils.js";
 
 function changeKeys(obj, keys, newKeys) {
   for (let index = 0; index < keys.length; index++) {
@@ -26,9 +26,9 @@ function createObjId() {
 }
 
 function createPropId(name = 'prop') {
-  if (name.includes('_')) {
-    name = name.split('_')[0];
-  }
+  // if (name.includes('_')) {
+  //   name = name.split('_')[0];
+  // }
   return name + '_' + generateId(objLength);
 }
 
@@ -106,7 +106,8 @@ export function regenerate(parsed, map = {}) {
         const renames = names.map(createPropId);
 
         names.forEach((name, index) => {
-          map[name] = renames[index];
+          const key = [alias, ...levels, name].join('/');
+          map[key] = renames[index];
         });
 
         changeKeys(json, names, renames);

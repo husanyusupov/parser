@@ -1,5 +1,14 @@
-export default function convertCSS (parsed, map) {
+export default function convertCSS(parsed, map) {
+  const regColor = /var\(--(color-i[a-z0-9]{8})\)/g;
+  const colorProps = new Set([
+    'fill', 'stroke', 'stop-color', 
+    'color', 'outline-color',
+    'text-shadow', 'box-shadow', 'background-color', 'background-image',
+    'border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color',
+    '-webkit-text-stroke-color'
+  ]);
   const collection = parsed.tree.selectorCollection.map;
+  const variables = parsed.tree.selectorCollection.variables;
   const css = {
     map: {}
   };
@@ -20,7 +29,13 @@ export default function convertCSS (parsed, map) {
     for (let key in obj.rules) {
       if (obj.rules.hasOwnProperty(key)) {
         const rule = obj.rules[key];
-        style[rule.name] = rule.value;
+        let value = String(rule.value);
+        
+        if (colorProps.has(rule.name)) {
+          value = value.replace(regColor, (_, name) => variables[name]);
+        }
+        
+        style[rule.name] = value;
       }
     }
   });

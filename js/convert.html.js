@@ -5,10 +5,6 @@ export default function convertHTML (parsed, map) {
   };
 
   function getUpdatedPath(property) {
-    let match = property.match(/(.+?)(\..+)/);
-    if (match) {
-      return map[match[1]] + match[2];
-    }
     return map[property];
   }
 
@@ -16,7 +12,7 @@ export default function convertHTML (parsed, map) {
     return '$' + (tag.widgetName || 'mc') + '_' + tag.id;
   }
 
-  function bypass(id) {
+  function bypass(id, path = '') {
     const originTag = parsed.tree.tags[id];
 
     const tag = {
@@ -28,12 +24,14 @@ export default function convertHTML (parsed, map) {
 
     if (originTag.dataSource === 's3') {
       if (!tag.fn) tag.fn = {};
-      tag.fn.use = getUpdatedPath(getAlias(originTag));
+      path = getAlias(originTag);
+      tag.fn.use = getUpdatedPath(path);
     }
 
     if (originTag.fn?.each) {
       if (!tag.fn) tag.fn = {};
-      tag.fn.each = getUpdatedPath(originTag.fn.each);
+      path += '/' + originTag.fn.each;
+      tag.fn.each = getUpdatedPath(path);
     }
 
     if (originTag.fn?.label) {
@@ -53,7 +51,15 @@ export default function convertHTML (parsed, map) {
 
     if (originTag.data) {
       Object.keys(originTag.data).forEach((key) => {
-        const value = getUpdatedPath(originTag.data[key]);
+        const property = originTag.data[key];
+        let match = property.match(/(.+?)(\..+)/);
+        let value;
+        if (match) {
+          value = getUpdatedPath(path + '/' + match[1]) + match[2];
+        } else {
+          value = getUpdatedPath(path + '/' + property);
+        }
+        console.log(path + '/' + property, value);
         if (key === 'text') {
           tag.textContent = value;
         } else {
@@ -64,7 +70,9 @@ export default function convertHTML (parsed, map) {
     }
 
     if (!tag.textContent && originTag.children?.length) {
-      tag.children = originTag.children.map(bypass);
+      tag.children = originTag.children.map((id) => {
+        return bypass(id, path);
+      });
     }
 
     tree.map[tag.id] = tag;
