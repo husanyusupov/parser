@@ -25,13 +25,13 @@ export default function convertHTML (parsed, map) {
     if (originTag.dataSource === 's3') {
       if (!tag.fn) tag.fn = {};
       path = getAlias(originTag);
-      tag.fn.use = getUpdatedPath(path);
+      tag.fn.use = map[path];
     }
 
     if (originTag.fn?.each) {
       if (!tag.fn) tag.fn = {};
       path += '/' + originTag.fn.each;
-      tag.fn.each = getUpdatedPath(path);
+      tag.fn.each = map[path];
     }
 
     if (originTag.fn?.label) {
@@ -46,7 +46,7 @@ export default function convertHTML (parsed, map) {
 
     if (originTag.className === 'include') {
       if (!tag.fn) tag.fn = {};
-      tag.fn.include = getUpdatedPath(originTag.symbol);
+      tag.fn.include = map[originTag.symbol];
     }
 
     if (originTag.data) {
@@ -55,9 +55,9 @@ export default function convertHTML (parsed, map) {
         let match = property.match(/(.+?)(\..+)/);
         let value;
         if (match) {
-          value = getUpdatedPath(path + '/' + match[1]) + match[2];
+          value = map[path + '/' + match[1]] + match[2];
         } else {
-          value = getUpdatedPath(path + '/' + property);
+          value = map[path + '/' + property];
         }
         if (key === 'text') {
           tag.textContent = value;

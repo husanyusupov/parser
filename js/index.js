@@ -10,6 +10,7 @@ import convertData from "./convert.data.js";
 const design = document.getElementById('design');
 const form = document.getElementById('form');
 const resultText = document.getElementById('result');
+const withExport = document.getElementById('export-checkbox');
 
 form.addEventListener('submit', generate);
 form.addEventListener('focusout', save);
@@ -137,12 +138,25 @@ function onDesign(e) {
       design.layout.usedSymbols = symbols.map((symbol) => symbol.id);
     }
 
-    resultText.value = JSON.stringify(design);
+    let designText = JSON.stringify(design);
+
+    if (withExport.checked) {
+      designText = 'const design = ' + designText + ';\n\nexport default design;'
+    }
+
+    resultText.value = designText;
 
     symbols.forEach((symbol) => {
       const textarea = document.createElement('textarea');
       textarea.readOnly = true;
-      textarea.value = JSON.stringify(symbol);
+
+      let symbolText = JSON.stringify(symbol);
+
+      if (withExport.checked) {
+        symbolText = 'const symbol = ' + symbolText + ';\n\nexport default symbol;'
+      }
+  
+      textarea.value = symbolText;
       resultText.insertAdjacentElement('afterend', textarea);
     });
 
@@ -160,3 +174,9 @@ function onDesign(e) {
 
   reader.readAsText(file);
 }
+
+document.addEventListener('focusin', (e) => {
+  if (e.target.tagName.toLowerCase() === 'textarea' && e.target.closest('.footer')) {
+    e.target.select();
+  }
+})

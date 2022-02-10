@@ -52,9 +52,8 @@ function dataWalker(item, callback, flat = true) {
   const data = item.data;
   const defs = item.defs;
 
-  if (callback(levels, body, data, defs) !== false) {
-    bypass(levels, body, data, defs);
-  }
+  bypass(levels, body, data, defs);
+  callback(levels, body, data, defs);
 
   function bypass(levels, json, data, defs) {
     for (const [name, body] of Object.entries(json)) {
@@ -82,9 +81,8 @@ function dataWalker(item, callback, flat = true) {
           }
         }
 
-        if (callback(nextLevels, nextJson, nextData, nextDefs) !== false) {
-          bypass(nextLevels, nextJson, nextData, nextDefs);
-        }
+        bypass(nextLevels, nextJson, nextData, nextDefs);
+        callback(nextLevels, nextJson, nextData, nextDefs);
       }
     }
   }
